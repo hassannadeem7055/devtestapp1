@@ -1,7 +1,7 @@
 import "./App.css";
 import ContactForm from "./components/ContactForm";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ThankYouPage from "./components/ThankYouPage";
 import Footer from "./components/Footer";
 function App() {

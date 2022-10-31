@@ -1,6 +1,4 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
@@ -12,39 +10,38 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { useNavigate } from "react-router-dom";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
 const ContactForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [usStates, setUsStates] = useState("");
-  const [validationState, setValidationState] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [validationState, setValidationState] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    zipcode: false,
+    usStates: false,
+  });
   const isValidated = () => {
-    let valid = true
+    let valid = true;
     for (const property in validationState) {
       if (!validationState[property]) {
-        valid = false
-        break
+        valid = false;
+        break;
       }
     }
-    return valid
-  }
-  
+    return valid;
+  };
+
   let navigate = useNavigate();
   const handleSubmit = () => {
-    // if (isValidated()) {
-      navigate("/thankyou"); 
-
-      // }
-  }
+    setIsSubmitted(true);
+    if (isValidated()) {
+      navigate("/thankyou");
+    }
+  };
   return (
     <>
       <Paper
@@ -54,18 +51,22 @@ const ContactForm = () => {
           margin: 20,
         }}
       >
+        {JSON.stringify(validationState)}
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
               fullWidth
               id="firstName"
               label="First name"
+              error={isSubmitted && !validationState.firstName}
               value={firstName}
               onChange={(e) => {
                 setFirstName(e.target.value);
                 setValidationState({
                   ...validationState,
-                  firstName: !!e.target.value,
+                  firstName:
+                    !RegExp("[^a-zA-Z ]").test(e.target.value) &&
+                    e.target.value !== "",
                 });
               }}
             />
@@ -75,12 +76,15 @@ const ContactForm = () => {
               fullWidth
               id="lastName"
               label="Last name"
+              error={isSubmitted && !validationState.lastName}
               value={lastName}
               onChange={(e) => {
                 setLastName(e.target.value);
                 setValidationState({
                   ...validationState,
-                  lastName: !!e.target.value,
+                  lastName:
+                    !RegExp('[^a-zA-Z-" ]').test(e.target.value) &&
+                    e.target.value !== "",
                 });
               }}
             />
@@ -90,12 +94,16 @@ const ContactForm = () => {
               fullWidth
               id="email"
               label="Email"
+              error={isSubmitted && !validationState.email}
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 setValidationState({
                   ...validationState,
-                  email: !!e.target.value,
+                  email:
+                    RegExp(
+                      "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
+                    ).test(e.target.value) && e.target.value !== "",
                 });
               }}
             />
@@ -105,6 +113,7 @@ const ContactForm = () => {
               fullWidth
               id="zipcode"
               label="Zip code"
+              error={isSubmitted && zipcode === ""}
               value={zipcode}
               onChange={(e) => {
                 setZipcode(e.target.value);
@@ -121,8 +130,9 @@ const ContactForm = () => {
               <Select
                 labelId="select-label"
                 id="usStates"
-                value={usStates}
                 label="US State"
+                value={usStates}
+                error={isSubmitted && usStates === ""}
                 onChange={(e) => {
                   setUsStates(e.target.value);
                   setValidationState({
