@@ -43,15 +43,15 @@ const ContactForm = () => {
     }
   };
   return (
-    <>
+    <Grid container justifyContent="center">
       <Paper
         elevation={8}
         style={{
-          padding: 10,
+          padding: 20,
           margin: 20,
         }}
       >
-        {JSON.stringify(validationState)}
+        {/* {JSON.stringify(validationState)} */}
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
@@ -111,6 +111,7 @@ const ContactForm = () => {
           <Grid item xs={4}>
             <TextField
               fullWidth
+              type="number"
               id="zipcode"
               label="Zip code"
               error={isSubmitted && zipcode === ""}
@@ -159,7 +160,7 @@ const ContactForm = () => {
           </Grid>
         </Grid>
       </Paper>
-    </>
+    </Grid>
   );
 };
 

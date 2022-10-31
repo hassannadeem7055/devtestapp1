@@ -12,11 +12,13 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { ReactComponent as MyLogo } from "../assets/logos/logo.svg";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Home", "About Us", "Register"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
+  let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -36,7 +38,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" style={{ background: '#063970' }}>
+    <AppBar position="static" style={{ background: "#063970" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -68,16 +70,34 @@ function ResponsiveAppBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+              <MenuItem
+                key={0}
+                onClick={() => {
+                  navigate("/");
+                  setAnchorElNav(null);
+                }}
+              >
+                <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+              <MenuItem
+                key={1}
+                onClick={() => {
+                  navigate("/about");
+                  setAnchorElNav(null);
+                }}
+              >
+                <Typography textAlign="center">About Us</Typography>
+              </MenuItem>
             </Menu>
           </Box>
-          <MyLogo style={{ width: 80, height:80, m: 5 }} />
+          <MyLogo style={{ width: 80, height: 80, m: 5 }} />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {/* {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -85,7 +105,25 @@ function ResponsiveAppBar() {
               >
                 {page}
               </Button>
-            ))}
+            ))} */}
+            <Button
+              key={0}
+              onClick={() => {
+                navigate("/");
+              }}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Home
+            </Button>
+            <Button
+              key={1}
+              onClick={() => {
+                navigate("/about");
+              }}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              About Us
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
