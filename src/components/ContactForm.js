@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 const ContactForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -52,6 +53,9 @@ const ContactForm = () => {
         }}
       >
         {/* {JSON.stringify(validationState)} */}
+        <Typography variant="h4" gutterBottom>
+          Registration Form
+        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
